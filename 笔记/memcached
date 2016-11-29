@@ -1,0 +1,65 @@
+#! /bin/sh
+#
+# chkconfig: - 55 45
+# description:  memcached service
+# processname: memcached
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+OPTIONS="-d -m 3072M -u root -p 22121 -l 10.25.58.44 -c 65535 -P /var/run/memcached22121.pid"
+
+RETVAL=0
+exe="/usr/local/services/memcached/bin/memcached"
+prog="memcached"
+pidfile=""/var/run/memcached22121.pid
+
+start () {
+     echo -n $"Starting $prog: "  
+     daemon ${exe} $OPTIONS
+    RETVAL=$?
+    echo
+    [ $RETVAL -eq 0 ] && touch ${prog}
+}
+stop () {
+    echo -n $"Stopping $prog: "
+    killproc ${prog}
+    RETVAL=$?
+   echo
+        if [ $RETVAL -eq 0 ] ; then
+                rm -f ${pidfile}
+        fi
+
+
+}
+
+restart () {
+    stop
+    start
+}
+
+
+# See how we were called.
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  status)
+    status ${prog}
+    ;;
+  restart|reload)
+    restart
+    ;;
+  condrestart)
+    [ -f ${prog} ] && restart || :
+    ;;
+  *)
+    echo $"Usage: $0 {start|stop|status|restart|reload|condrestart}"
+    exit 1
+esac
+
+exit $?
+

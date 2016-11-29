@@ -1,0 +1,66 @@
+#! /bin/sh
+#
+# chkconfig: - 55 45
+# description:  Twitter's twemproxy nutcracker
+# processname: nutcracker
+# config: /etc/sysconfig/nutcracker
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+OPTIONS="-d -c /usr/local/services/twemproxy/conf/nutcracker.yml -s 20002 -a 192.168.1.225 -p /usr/local/services/twemproxy/run/memproxy.pid -o /usr/local/services/twemproxy/run/memproxy.log -v 11"
+
+RETVAL=0
+exe="/usr/local/services/twemproxy/sbin/nutcracker"
+prog="nutcracker"
+pidfile="/usr/local/services/twemproxy/run/memproxy.pid"
+
+start () {
+     echo -n $"Starting $prog: "  
+     daemon ${exe} $OPTIONS
+    RETVAL=$?
+    echo
+    [ $RETVAL -eq 0 ] && touch ${prog}
+}
+stop () {
+    echo -n $"Stopping $prog: "
+    killproc ${prog}
+    RETVAL=$?
+   echo
+        if [ $RETVAL -eq 0 ] ; then
+                rm -f ${pidfile}
+        fi
+
+
+}
+
+restart () {
+    stop
+    start
+}
+
+
+# See how we were called.
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  status)
+    status ${prog}
+    ;;
+  restart|reload)
+    restart
+    ;;
+  condrestart)
+    [ -f ${prog} ] && restart || :
+    ;;
+  *)
+    echo $"Usage: $0 {start|stop|status|restart|reload|condrestart}"
+    exit 1
+esac
+
+exit $?
+
