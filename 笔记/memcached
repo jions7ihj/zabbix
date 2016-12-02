@@ -7,12 +7,12 @@
 # Source function library.
 . /etc/rc.d/init.d/functions
 
-OPTIONS="-d -m 3072M -u root -p 22121 -l 10.25.58.44 -c 65535 -P /var/run/memcached22121.pid"
+OPTIONS="-d -m 3072M -u root -p 22121 -l 10.205.8.44 -c 65535 -P /var/run/memcached22121.pid"
 
 RETVAL=0
 exe="/usr/local/services/memcached/bin/memcached"
 prog="memcached"
-pidfile=""/var/run/memcached22121.pid
+pidfile="/var/run/memcached22121.pid"
 
 start () {
      echo -n $"Starting $prog: "  
