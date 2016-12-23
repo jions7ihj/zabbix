@@ -1,4 +1,5 @@
 #!/bin/bash
+
 #Date/Time 
 CDATE=$(date "+%Y-%m-%d")
 CTIME=$(date "+%Y-%m-%d-%H-%M")
