@@ -1,0 +1,29 @@
+﻿第二种
+mysql>UNLOCK TABLES;
+锁表
+锁定数据表，避免在备份过程中，表被更新
+mysql>LOCK TABLES tbl_name READ;
+为表增加一个写锁定：
+mysql>LOCK TABLES tbl_name WRITE;
+
+mysqld --install MySQL --defaults-file="C:\Windows\my.ini"
+
+mysqld.exe MySQL-5.6.21 --defaults-file=D:\phpStudy\MySQL\my.ini MySQL
+mysqld.exe --install Mysql-5.6.21 --defaults-file=D:\MySQL\my.ini
+
+
+change master to master_host='192.168.1.32',
+master_port=3306,
+master_user='repl',
+master_password='000000',
+master_log_file='master-bin.000048',
+master_log_pos=702629072;
+
+CHANGE MASTER TO MASTER_LOG_FILE='master-bin.000030',MASTER_LOG_POS=107;
+
+pt-online-schema-change --user=root --password=000000 --host=192.168.1.234  --alter "CONVERT TO CHARACTER SET utf8mb4" D=chart,t=user --no-check-replication-filters --alter-foreign-keys-method=auto --recursion-method=none --print --execute
+
+/usr/local/mysql/bin/mysqlbinlog  ./data/slave-relay-bin.000034 --base64-output=decode-rows -v > /decoded.log
+
+
+mysqldump --host=192.168.1.32 --opt fenbei| mysql --host=192.168.1.25 -C benbei
