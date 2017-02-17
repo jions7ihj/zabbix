@@ -25,7 +25,7 @@ filebeat.prospectors:
 -
   paths:
     - /root/tomcat/tomcat1/logs/fblive*
-    - /root/data/FBLive5.Robot/bin/logs/fblive*        
+    - /root/data/FB.Robot/bin/logs/fblive*        
   document_type: tomcat-accesslog
   multiline:
     pattern: ^\[
@@ -101,7 +101,7 @@ filebeat.prospectors:
 #----------------------------- Logstash output --------------------------------
 output.logstash:
   # The Logstash hosts
-  hosts: ["10.26.32.129:9500"]
+  hosts: ["19.26.32.29:9500"]
 
   # Optional SSL. By default is off.
   # List of root certificates for HTTPS server verifications
