@@ -7,7 +7,7 @@ function sendErrorMail(){
 
 	if [ -f "$file" ]; then
 		echo 'send mail'$file
-		mail -s '[error]'$1 1357384977@qq.com,xiezhongjiang@fenbei.com,xuexiaobo@fenbei.com,chenglei@fenbei.com,zhengdi@qq.com,zouwenyan@fenbei.com,liushulin@fenbei.com,yangsong@fenbei.com,524095992@qq.com,ranruichun@fenbei.com < $file
+		mail -s '[error]'$1 1357327@qq.com,13572@qq.com< $file
 		mv $file $file.send
 	else
 		echo 'no file:'$file
