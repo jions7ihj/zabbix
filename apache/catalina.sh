@@ -97,7 +97,7 @@
 # $Id: catalina.sh 1498485 2013-07-01 14:37:43Z markt $
 # -----------------------------------------------------------------------------
 
-JAVA_OPTS="-Dcom.sun.management.jmxremote -Djava.rmi.server.hostname=192.168.1.223 -Dcom.sun.management.jmxremote.port=7879 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Djava.library.path=/usr/local/apr/lib -server -Dfile.encoding=UTF-8 -Xms8096m -Xmx12098m -XX:PermSize=64M -XX:MaxPermSize=256m -Djava.security.egd=file:/dev/./urandom"
+JAVA_OPTS="-Dcom.sun.management.jmxremote -Djava.rmi.server.hostname=192.168.1.223 -Dcom.sun.management.jmxremote.port=7879 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.authenticate=true -Dcom.sun.management.jmxremote.password.file=../conf/jmxremote.password -Dcom.sun.management.jmxremote.access.file=../conf/jmxremote.access -Djava.library.path=/usr/local/apr/lib -server -Dfile.encoding=UTF-8 -Xms8096m -Xmx12098m -XX:PermSize=64M -XX:MaxPermSize=256m -Djava.security.egd=file:/dev/./urandom"
 CATALINA_PID=10001
 CATALINA_HOME=/usr/local/services/tomcat7053/tomcat1
 JAVA_HOME=/usr/local/services/jdk1.7.0_60
