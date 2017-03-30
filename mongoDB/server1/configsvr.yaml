@@ -1,0 +1,25 @@
+systemLog:
+  destination: file
+  path: "/home/mongodb/config/log/config.log"
+  logAppend: true
+storage:
+  journal:
+    enabled: true
+  dbPath: "/home/mongodb/config/data"
+processManagement:
+  fork: true
+net:
+  bindIp: 10.25.177.166
+  port: 21000
+setParameter:
+  enableLocalhostAuthBypass: true
+  authenticationMechanisms: SCRAM-SHA-1 
+security:
+  keyFile: "/home/mongodb/keyfile"
+  clusterAuthMode: "keyFile"
+  authorization: "enabled"
+sharding:
+  clusterRole: configsvr
+replication:
+  replSetName: cfgReplSet
+  

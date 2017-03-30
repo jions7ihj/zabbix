@@ -1,0 +1,5 @@
+/home/mongodb/mongodbbin/bin/mongod -f /home/mongodb/config/configsvr.yaml
+/home/mongodb/mongodbbin/bin/mongos --config /home/mongodb/mongos/mongos.yaml
+/home/mongodb/mongodbbin/bin/mongod -f /home/mongodb/shard1/mongod_shard1.yaml
+/home/mongodb/mongodbbin/bin/mongod -f /home/mongodb/shard2/mongod_shard2.yaml
+/home/mongodb/mongodbbin/bin/mongod -f /home/mongodb/shard3/mongod_shard3.yaml

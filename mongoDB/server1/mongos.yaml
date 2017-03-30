@@ -1,0 +1,21 @@
+systemLog:
+ destination: file
+#日志位置
+ path: "/home/mongodb/mongos/log/mongos.log"
+ logAppend: true
+##网路配置
+processManagement:
+ fork: true 
+net:
+  ##端口配置
+  port: 20000
+##分片配置
+sharding:
+   ##指定config server
+  configDB: cfgReplSet/10.45.8.14:21000,10.25.177.166:21000,10.26.84.202:21000
+setParameter:
+  enableLocalhostAuthBypass: true
+  authenticationMechanisms: SCRAM-SHA-1
+security:
+  keyFile: "/home/mongodb/keyfile"
+  clusterAuthMode: "keyFile"
