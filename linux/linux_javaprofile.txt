@@ -1,0 +1,5 @@
+export JAVA_HOME=/usr/lib/jvm/jdk1.8.0_111
+export CLASSPATH=.:$JAVA_HOME/lib:$JAVA_HOME/jre/lib:$CLASSPATH
+export M2_HOME=/usr/local/maven
+export PATH=$M2_HOME/bin:$JAVA_HOME/bin:$JAVA_HOME/jre/bin:$PATH
+ulimit -SHn 1048576
