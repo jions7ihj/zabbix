@@ -16,3 +16,6 @@ MASTER_PASSWORD = 'repl',
 MASTER_AUTO_POSITION = 1;
 
 
+grant all on *.* to test2@192.168.1.% identified by "123456";
+
+
