@@ -1,0 +1,70 @@
+﻿configure --prefix=/usr/local/servcies/nginx --with-select_module --with-poll_module --with-threads --with-file-aio --with-http_ssl_module --with-http_v2_module --with-http_realip_module --with-http_addition_module --with-http_xslt_module --with-http_xslt_module=dynamic --with-http_image_filter_module --with-http_image_filter_module=dynamic --with-http_geoip_module --with-http_geoip_module=dynamic --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_mp4_module --with-http_gunzip_module --with-http_gzip_static_module --with-http_auth_request_module --with-http_random_index_module --with-http_secure_link_module --with-http_degradation_module --with-http_slice_module --with-http_stub_status_module --with-http_perl_module --with-http_perl_module=dynamic --with-mail --with-mail=dynamic --with-mail_ssl_module --with-stream --with-stream=dynamic --with-stream_ssl_module --with-stream_realip_module --with-stream_geoip_module --with-stream_geoip_module=dynamic --with-stream_ssl_preread_module --with-google_perftools_module --add-module=/softwar/enaxsi/naxsi_src --add-dynamic-module=/usr/local/services/nginx/external --with-pcre --with-pcre-jit --with-compat --with-openssl=/usr/bin/openssl             
+           
+           
+           
+           修改NGINX版本名称伪装任意WEB SERVER
+ 
+
+无论是作为Web服务器或其他类型程序的反向代理服务器，Nginx("engine x")都有着高性能且轻量级的优势。其特点是占有内存少，并发能力强，事实上Nginx的并发能力确实在同类型的网页服务器中表现较好。这也使得Nginx在如今不管是存放在高配独立服务器上的大型的门户，还是存放在迷你64M内存VPS上的小型的个人博客，Nginx都在被广泛使用着。
+
+ 
+
+国内淘宝、新浪、网易、腾讯等都在使用。其中淘宝正是基于原作者的BSD-like协议，在其源代码基础上开发了Tengine，这暂且不表。
+
+ 
+
+今天我们来说说，如何修改Nginx其内部默认名称。这对安全或者装逼都是非常实用的。
+
+ 
+
+我们都知道一般Nginx有哪些内部名称展示，如有通过HTTP Response
+Header中的Server、错误页的footer、FPM-FastCGI等。
+
+ 
+
+一般来说修改3个位置，一个是nginx.h、另一个是ngx_http_header_filter_module.c、还有一个ngx_http_special_response.c。
+
+ 
+
+ 
+
+提示：以下修改需要在编译安装Nginx之前进行，修改之后再编译
+
+现在Web Server使用广泛，针对它的攻击也越来越多，Nginx这玩意出道时间也并不长，虽然国内很多门户网站都用它，小内存VPS用户也爱它，但是我可不想哪天它爆出了个惊天BUG，上次80sec公布的Nginx相关PHP FPM漏洞就是警示哦，倘若伪装了我的Nginx服务器，攻击者就不知道我使用的是何种Web Server，也就无从下手了。
+
+修改src/core/nginx.h（Nginx内部名称的）
+
+#define NGINX_VERSION      "1.8.0"
+#define NGINX_VER          "NGINX/" NGINX_VERSION
+NGINX_VERSION是版本号，NGINX_VER是名称
+
+ 
+
+修改src/http/ngx_http_header_filter_module.c（HTTP ResponseHeader）
+
+static char ngx_http_server_string[] = "Server: nginx" CRLF;
+ 
+
+修改src/http/ngx_http_special_response.c（修改错误页的底部Footer）
+
+static u_char ngx_http_error_tail[] =
+"<hr><center>nginx</center>" CRLF
+"</body>" CRLF
+"</html>" CRLF
+;
+ 
+
+为什么不修改安装后的Nginx Config下的fastcgi.conf呢？
+
+因为现在外部已经是无法了解我们的服务器名称，已经达到我们的目的了。
+
+而且我们常用的一些程序，可能会对你的前端（反向代理服务器）做判断，毕竟Nginx不同于Apache，无法动态规则。
+
+特别是Wordpress的缓存插件，大多会通过判断你是否Nginx，如果是的话，提醒你添加一些规则语句。
+
+这时fastcgi.conf就起作用的，其中的
+fastcgi_param SERVER_SOFTWARE
+nginx/$nginx_version;可以使得PHP与Nginx内部之间的互相了解。
+
+
+所以我的建议，还是不修改fastcgi.conf，当然你非要改，也可以的。

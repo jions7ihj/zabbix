@@ -1,0 +1,31 @@
+mongod -f /usr/local/services/mongodb/bin/config.yaml
+
+notice: 想要哪个成为主就在用那个主机地址链接mongodbserver 执行
+
+mongo mongodb://192.168.1.204:21000
+
+
+rsconf = {
+    _id:'cfgReplSet',
+    members:
+    [
+        {_id:0,
+        host:'192.168.1.204:21000'
+        },
+        {_id:1,
+        host:'192.168.1.203:21000'
+        },
+        {_id:2,
+        host:'192.168.1.202:21000'
+        },
+    ]	
+}
+use admin
+
+db.createUser(
+       {
+        user: "root",
+        pwd: "123456",
+        roles: [ { role: "root", db: "admin" } ]
+	}
+)

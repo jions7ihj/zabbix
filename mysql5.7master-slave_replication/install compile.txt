@@ -1,0 +1,18 @@
+cmake .  -DCMAKE_INSTALL_PREFIX=/usr/local/services/mysql  -DDEFAULT_CHARSET=utf8mb4  -DDEFAULT_COLLATION=utf8mb4_general_ci  -DWITH_INNOBASE_STORAGE_ENGINE=1  -DWITH_ARCHIVE_STORAGE_ENGINE=1  -DWITH_BLACKHOLE_STORAGE_ENGINE=1  -DMYSQL_DATADIR=/data/mysqldata  -DMYSQL_TCP_PORT=3306  -DENABLE_DOWNLOADS=1  -DSYSCONFDIR=/etc/  -DWITH_SSL=system  -DWITH_BOOST=/usr/local/boost  -DWITH_PERFSCHEMA_STORAGE_ENGINE=1
+
+make -jN notice:N由cpu核数决定
+
+make install 
+
+cp support-files/my-default.cnf /etc/my.cnf
+
+mysqld --initialize --user=mysql --basedir=/usr/local/services/mysql --datadir=/data/mysqldata
+
+CHANGE MASTER TO 
+MASTER_HOST = '192.168.1.201',
+MASTER_PORT = 3306,
+MASTER_USER = 'repl',
+MASTER_PASSWORD = 'repl',
+MASTER_AUTO_POSITION = 1;
+
+
