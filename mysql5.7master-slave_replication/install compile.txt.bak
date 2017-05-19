@@ -7,7 +7,6 @@ make install
 cp support-files/my-default.cnf /etc/my.cnf
 
 mysqld --initialize --user=mysql --basedir=/usr/local/services/mysql --datadir=/data/mysqldata
-(./mysqld --defaults-file=/usr/local/services/mysql-5.7.18/my.cnf --initialize --user=mysql --basedir=/usr/local/services/mysql-5.7.18 --datadir=/usr/local/services/mysql-5.7.18/data)
 
 CHANGE MASTER TO 
 MASTER_HOST = '192.168.1.201',
