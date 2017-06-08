@@ -1,0 +1,8 @@
+note: sysbench 压测mysql
+
+./sysbench --mysql-host=10.11.1.101 --mysql-port=3306 --mysql-user=dfs --mysql-password=dddfgr44555 --mysql-db=sbtest --oltp-tables-count=10 --oltp-table-size=10000000 --num-threads=3000 --max-requests=100000000 --report-interval=1 --test=/software/sysbench/share/sysbench/oltp.lua --db-driver=mysql prepare
+./sysbench --mysql-host=10.11.1.101 --mysql-port=3306 --mysql-user=dfs --mysql-password=dddfgr44555 --mysql-db=sbtest --oltp-tables-count=10 --oltp-table-size=10000000 --num-threads=3000 --max-requests=100000000 --report-interval=1 --test=/software/sysbench/share/sysbench/oltp.lua --db-driver=mysql run
+
+mysql 压车监控
+./qps.sh
+doDBA 
