@@ -4,3 +4,5 @@ make && make install
 
 
 yum install php70w-common php70w-fpm php70w-opcache php70w-gd php70w-mysqlnd php70w-mbstring php70w-pecl-redis php70w-pecl-memcached php70w-devel php70w httpd
+
+yum remove php php-cli php-common php-devel php-gd php-mbstring php-mcrypt php-mysql php-pdo php-pear php-pecl-igbinary php-pecl-redis php-xml
