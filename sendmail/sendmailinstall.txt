@@ -1,0 +1,25 @@
+#!/usr/bin/bash
+################################
+##senmail 利用smtp配置发送邮件##
+################################
+yum install sendmail mailx
+
+################################
+###smtp 25 端口配置#############
+################################
+echo "set from=username@126.com" >>etc/mail.rc
+echo "set smtp=smtp.126.com" >>etc/mail.rc
+echo "set smtp-auth-user=username" >>etc/mail.rc
+echo "set smtp-auth-password=password" >>etc/mail.rc
+echo "set smtp-auth=login" >>etc/mail.rc
+################################
+####smtp 465(ssl)端口配置#######
+################################
+echo "set from=username@126.com" >>etc/mail.rc
+echo "set smtp="smtps://smtp.exmail.qq.com:465"' >>etc/mail.rc
+echo "set smtp-auth-user="username"" >>etc/mail.rc
+echo "set smtp-auth-password="password"" >>etc/mail.rc
+echo "set ssl-verify=ignore" >>etc/mail.rc
+echo "set smtp-auth=login" >>etc/mail.rc
+echo "set nss-config-dir=/etc/pki/nssdb/" >>etc/mail.rc
+
