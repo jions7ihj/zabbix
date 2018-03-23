@@ -1,0 +1,24 @@
+mailx使用ssl证书发邮件
+
+环境准备 安装mailx
+yum install mailx -y
+
+查看证书：
+openssl s_client -showcerts -connect smtp.qq.com:465
+
+获取证书：
+mkdir -p /root/.certs/
+echo -n | openssl s_client -connect smtp.qq.com:465 | sed -ne '/-BEGIN >CERTIFICATE-/,/-END CERTIFICATE-/p' > ~/.certs/qq.crt
+certutil -A -n "GeoTrust SSL CA - G3" -t "C,," -d ~/.certs -i ~/.certs/qq.crt
+certutil -A -n "GeoTrust Global CA" -t "C,," -d ~/.certs -i ~/.certs/qq.crt
+certutil -L -d /root/.certs
+
+配置证书 /etc/mail.rc
+set from=xxxooo@126.com
+set smtp=smtps://smtp.126.com:465
+set smtp-auth-user=xxxooo@126.com
+set smtp-auth-password=你的授权码
+set smtp-auth=login
+#set smtp-use-starttls 这里是不需要配置的，很多地方没说明，配置了反而会验证失败，所以我注释掉；
+set ssl-verify=ignore
+set nss-config-dir=/root/.certs
