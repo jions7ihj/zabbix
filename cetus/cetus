@@ -1,0 +1,56 @@
+#! /bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+NAME=cetus
+CETUS_BIN=/usr/local/cetus/bin/$NAME
+CONFIGFILE=/usr/local/cetus/conf/proxy.conf
+PIDFILE=/usr/local/cetus/logs/$NAME.pid
+
+case "$1" in
+    start)
+        echo -n "Starting $NAME... "
+
+        if netstat -tnpl | grep -q cetus;then
+            echo "$NAME (pid `pidof $NAME`) already running."
+            exit 1
+        fi
+
+        $CETUS_BIN --defaults-file=$CONFIGFILE
+
+        if [ "$?" != 0 ] ; then
+            echo " failed"
+            exit 1
+        else
+            echo " done"
+        fi
+        ;;
+
+    stop)
+        echo -n "Stoping $NAME... "
+
+        if ! netstat -tnpl | grep -q cetus; then
+            echo "$NAME is not running."
+            exit 1
+        fi
+
+        kill `cat $PIDFILE`
+
+        if [ "$?" != 0 ] ; then
+            echo " failed. Use force-quit"
+            exit 1
+        else
+            echo " done"
+        fi
+	;;
+
+	restart)
+		$0 stop
+		sleep 1
+		$0 start
+	;;
+
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+		exit 1
+	;;
+
+esac
